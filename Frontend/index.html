@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ella’s Fragrance | Luxury Arabic Perfumes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>   
+
+    <header>
+        <div class="logo">Ella ’s Fragrance</div>
+        <nav>
+            <button id="cart-btn">🛒 Cart (<span id="cart-count">0</span>)</button>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Discover Exotic Arabic Scents</h1>
+        <p>Spot for Authentic Arabic Perfumes <br>Long-lastin, Luxurius, and Affordable!.</p>
+    </section>
+
+    <main>
+        <section class="products-container">
+            <h2>Our Collection</h2>
+            <div id="perfumes-grid" class="grid">
+                </div>
+        </section>
+
+        <aside id="cart-sidebar" class="sidebar hidden">
+            <div class="sidebar-header">
+                <h3>Your Shopping Bag</h3>
+                <button id="close-cart">X</button>
+            </div>
+            <div id="cart-items"></div>
+            <div class="cart-summary">
+                <h4>Total: MK<span id="cart-total">0.00</span></h4>
+                <button id="checkout-btn" class="btn-primary">Place Order</button>
+            </div>
+        </aside>
+    </main>
+
+    <script>
+        const API_URL = 'http://192.168.1.176:5000/api';
+        let cart = [];
+
+       
+        async function fetchPerfumes() {
+            try {
+                const response = await fetch(`${API_URL}/perfumes`);
+                const perfumes = await response.json();
+                const grid = document.getElementById('perfumes-grid');
+                
+                grid.innerHTML = perfumes.map(perfume => `
+                    <div class="card">
+                        <img src="${perfume.image}" alt="${perfume.name}">
+                        <div class="card-info">
+                            <h3>${perfume.name}</h3>
+                            <p class="notes">${perfume.notes}</p>
+                            <p class="price">MK${perfume.price.toFixed(2)}</p>
+                            <button onclick="addToCart(${perfume.id}, '${perfume.name}', ${perfume.price})" class="btn-add">Add to Cart</button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error("Error fetching perfumes:", error);
+            }
+        }
+
+       
+        function addToCart(id, name, price) {
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, quantity: 1 });
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cart-count').innerText = count;
+
+          
+            const cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div>
+                        <h5>${item.name}</h5>
+                        <p>MW${item.price} x ${item.quantity}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            document.getElementById('cart-total').innerText = total.toFixed(2);
+        }
+
+        
+        // Replace your old checkout-btn event listener with this WhatsApp integration:
+document.getElementById('checkout-btn').addEventListener('click', () => {
+    if (cart.length === 0) {
+        alert("Your shopping bag is empty!");
+        return;
+    }
+
+    
+    const whatsappNumber = "265995330194"; 
+
+    
+    let message = `*New Order Inquiry from Ella’s Fragrance*\n\n`;
+    message += `Hello! I would like to inquire about the following perfumes:\n`;
+    message += `───────────────────\n`;
+
+    cart.forEach(item => {
+        message += ` *${item.name}*\n`;
+        message += `   Qty: ${item.quantity} x MWK ${item.price.toLocaleString()}\n\n`;
+    });
+
+    const total = document.getElementById('cart-total').innerText;
+    message += `───────────────────\n`;
+    message += ` *Total Amount:* MWK ${total}\n\n`;
+    message += `Please let me know how I can proceed with payment and delivery! `;
+
+    // 3. Encode the text so the browser can read it safely as a URL link
+    const encodedMessage = encodeURIComponent(message);
+
+    // 4. Create the official WhatsApp Link API
+    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+    // 5. Open the link in a new browser tab or instantly launch the WhatsApp App
+    window.open(whatsappURL, '_blank');
+
+    // 6. Optional: Clear the cart layout after sending them to WhatsApp
+    cart = [];
+    updateCartUI();
+    toggleCart();
+});
+
+        
+        const toggleCart = () => document.getElementById('cart-sidebar').classList.toggle('open');
+        document.getElementById('cart-btn').addEventListener('click', toggleCart);
+        document.getElementById('close-cart').addEventListener('click', toggleCart);
+
+        
+        fetchPerfumes();
+    </script>
+</body>
+</html>
