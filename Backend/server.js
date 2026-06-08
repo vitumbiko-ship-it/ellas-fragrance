@@ -61,10 +61,10 @@ const perfumes = [
     },
     {
         id: 8,
-        name: "Oud Wood",
+        name: "Intense Wood",
         notes: "For Men",
         price: 18000.00,
-        image: "https://i.pinimg.com/1200x/4b/95/e7/4b95e725e3547579aa4aac202ffd78d6.jpg"
+        image: "https://tse1.mm.bing.net/th/id/OIP.EobHEhGHxlJxlsYTJLzBXwHaHV?rs=1&pid=ImgDetMain&o=7&rm=3"
     },
     {
         id: 9,
@@ -72,7 +72,44 @@ const perfumes = [
         notes: "For men",
         price: 18000.00,
         image: "https://i.pinimg.com/1200x/07/09/75/07097553e10a305212b46f4bb07260d3.jpg"
+    },
+    {
+        id: 10,
+        name: "Berries Weekens",
+        notes: "pink edition",
+        price: 18000.00,
+        image: "https://i.pinimg.com/736x/c3/c9/f7/c3c9f707f88f4bdb37a051a08502114b.jpg"
+    },
+    {
+        id: 11,
+        name: "Berries Weekend Mist",
+        notes: "pink eddition",
+        price: 18000.00,
+        image: "https://tse1.mm.bing.net/th/id/OIP.R9mWj7UXy9CXH9l9GbrNNwAAAA?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        id: 12,
+        name: "Chery C Pop",
+        notes: "Red",
+        price: 18000.00,
+        image: "https://i.pinimg.com/736x/a4/6d/fe/a46dfe78b695d4656bc4bee1f219b8ca.jpg"
+    },
+    {
+        id: 13,
+        name: "Asad",
+        notes: "For men",
+        price: 18000.00,
+        image: "https://i.pinimg.com/1200x/4f/69/e7/4f69e773cfe9e0ba020b617b282167ff.jpg"
+    },
+    {
+        id: 14,
+        name: "Marshmallow Crush",
+        notes: "Purple girlys",
+        price: 18000.00,
+        image: "https://rrunisexfashion.nl/wp-content/uploads/2025/07/img_4192-1.jpeg"
     }
+       
+
 ];
 
 
